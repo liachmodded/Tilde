@@ -2,6 +2,7 @@ language: java
 dist: trusty
 sudo: required
 jdk:
+- openjdk8
 - oraclejdk8
 git:
   quiet: true
@@ -19,38 +20,31 @@ jobs:
     script: "./gradlew build -S -i"
   - stage: deploy
     install: true
-    script: "./gradlew bintrayUpload -S -i"
-  - stage: javadocs
-    install: true
-    script: "./gradlew javadocs -S -i"
+    script: "./gradlew javadocs build bintrayUpload -S -i"
     deploy:
-      provider: pages
-      github_token: "$GITHUB_OAUTH_TOKEN"
-      local_dir: build/docs/javadoc
-      keep_history: true
-      skip_cleanup: true
-      target_branch: gh-pages
-      on:
-        branch: master
-  - stage: release
-    install: true
-    script: "./gradlew build -S -i"
-    deploy:
-      provider: releases
-      api_key: "$GITHUB_OAUTH_TOKEN"
-      files: build/libs/*
-      skip_cleanup: true
-      on:
-        branch: master
-        tags: true
+      - provider: pages
+        github_token: "$GITHUB_OAUTH_TOKEN"
+        local_dir: build/docs/javadoc
+        keep_history: true
+        skip_cleanup: true
+        target_branch: gh-pages
+        on:
+          jdk: oraclejdk8
+          repo: liachmodded/Tilde
+          branch: master
+      - provider: releases
+        api_key: "$GITHUB_OAUTH_TOKEN"
+        files: build/libs/*
+        skip_cleanup: true
+        on:
+          jdk: oraclejdk8
+          repo: liachmodded/Tilde
+          branch: master
+          tags: true
 stages:
 - build
 - name: deploy
-  if: repo = liachmodded/Tilde AND env(bintray_key)
-- name: javadocs
-  if: repo = liachmodded/Tilde AND env(GITHUB_OAUTH_TOKEN)
-- name: release
-  if: repo = liachmodded/Tilde AND env(GITHUB_OAUTH_TOKEN)
+  if: repo = liachmodded/Tilde AND env(GITHUB_OAUTH_TOKEN) AND env(bintray_key)
 env:
   global:
   - TERM=dumb
