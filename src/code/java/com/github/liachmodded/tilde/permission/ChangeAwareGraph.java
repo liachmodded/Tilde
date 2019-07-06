@@ -41,17 +41,17 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
         return false;
     }
 
-    @Override
-    public boolean putEdge(EndpointPair<N> endpoints) {
-        if (delegate.putEdge(endpoints)) {
-            mutated = true;
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean putEdge(EndpointPair<N> endpoints) {
+//        if (delegate.putEdge(endpoints)) {
+//            mutated = true;
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
-    public boolean removeNode(N node) {
+    public boolean removeNode(Object node) {
         if (delegate.removeNode(node)) {
             mutated = true;
             return true;
@@ -60,7 +60,7 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     }
 
     @Override
-    public boolean removeEdge(N nodeU, N nodeV) {
+    public boolean removeEdge(Object nodeU, Object nodeV) {
         if (delegate.removeEdge(nodeU, nodeV)) {
             mutated = true;
             return true;
@@ -68,14 +68,14 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
         return false;
     }
 
-    @Override
-    public boolean removeEdge(EndpointPair<N> endpoints) {
-        if (delegate.removeEdge(endpoints)) {
-            mutated = true;
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean removeEdge(EndpointPair<N> endpoints) {
+//        if (delegate.removeEdge(endpoints)) {
+//            mutated = true;
+//            return true;
+//        }
+//        return false;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="Regular graph delegates">
@@ -105,48 +105,48 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     }
 
     @Override
-    public Set<N> adjacentNodes(N node) {
+    public Set<N> adjacentNodes(Object node) {
         return delegate.adjacentNodes(node);
     }
 
     @Override
-    public Set<N> predecessors(N node) {
+    public Set<N> predecessors(Object node) {
         return delegate.predecessors(node);
     }
 
     @Override
-    public Set<N> successors(N node) {
+    public Set<N> successors(Object node) {
         return delegate.successors(node);
     }
 
-    @Override
-    public Set<EndpointPair<N>> incidentEdges(N node) {
-        return delegate.incidentEdges(node);
-    }
+//    @Override
+//    public Set<EndpointPair<N>> incidentEdges(N node) {
+//        return delegate.incidentEdges(node);
+//    }
 
     @Override
-    public int degree(N node) {
+    public int degree(Object node) {
         return delegate.degree(node);
     }
 
     @Override
-    public int inDegree(N node) {
+    public int inDegree(Object node) {
         return delegate.inDegree(node);
     }
 
     @Override
-    public int outDegree(N node) {
+    public int outDegree(Object node) {
         return delegate.outDegree(node);
     }
 
-    @Override
-    public boolean hasEdgeConnecting(N nodeU, N nodeV) {
-        return delegate.hasEdgeConnecting(nodeU, nodeV);
-    }
-
-    @Override
-    public boolean hasEdgeConnecting(EndpointPair<N> endpoints) {
-        return delegate.hasEdgeConnecting(endpoints);
-    }
+//    @Override
+//    public boolean hasEdgeConnecting(N nodeU, N nodeV) {
+//        return delegate.hasEdgeConnecting(nodeU, nodeV);
+//    }
+//
+//    @Override
+//    public boolean hasEdgeConnecting(EndpointPair<N> endpoints) {
+//        return delegate.hasEdgeConnecting(endpoints);
+//    }
     //</editor-fold>
 }

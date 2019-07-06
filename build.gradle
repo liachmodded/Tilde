@@ -27,7 +27,6 @@ dependencies {
 
     compileOnly 'org.checkerframework:checker-qual:2.9.0'
 
-    testImplementation 'com.google.guava:guava-testlib:28.0-jre'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
 
@@ -36,6 +35,12 @@ dependencies {
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:21.0")
+    }
 }
 
 sourceSets {
