@@ -1,10 +1,15 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 package com.github.liachmodded.tilde.permission;
 
-import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
+import com.google.common.graph.MutableGraph;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 final class PermissionTest {
 
@@ -21,22 +26,21 @@ final class PermissionTest {
         // anything -> player -> mod -> op -> owner
         //          \-> cmdBlock ----/
 
-        Graph<Object> subjectGraph = GraphBuilder.directed()
+        MutableGraph<Object> subjectGraph = GraphBuilder.directed()
                 .allowsSelfLoops(false)
-                .immutable()
-                .addNode(owner)
-                .addNode(op)
-                .addNode(mod)
-                .addNode(cmdBlock)
-                .addNode(player)
-                .addNode(anything)
-                .putEdge(anything, player)
-                .putEdge(anything, cmdBlock)
-                .putEdge(player, mod)
-                .putEdge(mod, op)
-                .putEdge(cmdBlock, op)
-                .putEdge(op, owner)
                 .build();
+        subjectGraph.addNode(owner);
+        subjectGraph.addNode(op);
+        subjectGraph.addNode(mod);
+        subjectGraph.addNode(cmdBlock);
+        subjectGraph.addNode(player);
+        subjectGraph.addNode(anything);
+        subjectGraph.putEdge(anything, player);
+        subjectGraph.putEdge(anything, cmdBlock);
+        subjectGraph.putEdge(player, mod);
+        subjectGraph.putEdge(mod, op);
+        subjectGraph.putEdge(cmdBlock, op);
+        subjectGraph.putEdge(op, owner);
         //</editor-fold>
 
         //<editor-fold desc="Key graph">
@@ -57,44 +61,43 @@ final class PermissionTest {
         // root
         Object rootCmd = new Object();
 
-        Graph<Object> keyGraph = GraphBuilder.directed().allowsSelfLoops(false)
-                .immutable()
-                .addNode(allPerm)
-                .addNode(allCmd)
-                .addNode(lvl2Cmd)
-                .addNode(lvl0Cmd)
-                .addNode(forceLoadUse)
-                .addNode(forceLoadCheck)
-                .addNode(forceLoad)
-                .addNode(dataModifyBlock)
-                .addNode(dataModify)
-                .addNode(data)
-                .addNode(rootCmd)
-                .putEdge(allPerm, allCmd)
-                .putEdge(allCmd, lvl2Cmd)
-                .putEdge(allCmd, forceLoadUse)
-                .putEdge(allCmd, forceLoadCheck)
-                .putEdge(allCmd, forceLoad)
-                .putEdge(allCmd, dataModifyBlock)
-                .putEdge(allCmd, dataModify)
-                .putEdge(allCmd, data)
-                .putEdge(allCmd, time)
-                .putEdge(allCmd, rootCmd)
-                .putEdge(lvl2Cmd, forceLoadCheck)
-                .putEdge(lvl2Cmd, forceLoad)
-                .putEdge(lvl2Cmd, dataModifyBlock)
-                .putEdge(lvl2Cmd, dataModify)
-                .putEdge(lvl2Cmd, data)
-                .putEdge(lvl2Cmd, lvl0Cmd)
-                .putEdge(lvl0Cmd, time)
-                .putEdge(forceLoadUse, forceLoad)
-                .putEdge(forceLoadCheck, forceLoad)
-                .putEdge(forceLoad, rootCmd)
-                .putEdge(dataModifyBlock, dataModify)
-                .putEdge(dataModify, data)
-                .putEdge(data, rootCmd)
-                .putEdge(time, rootCmd)
+        MutableGraph<Object> keyGraph = GraphBuilder.directed().allowsSelfLoops(false)
                 .build();
+        keyGraph.addNode(allPerm);
+        keyGraph.addNode(allCmd);
+        keyGraph.addNode(lvl2Cmd);
+        keyGraph.addNode(lvl0Cmd);
+        keyGraph.addNode(forceLoadUse);
+        keyGraph.addNode(forceLoadCheck);
+        keyGraph.addNode(forceLoad);
+        keyGraph.addNode(dataModifyBlock);
+        keyGraph.addNode(dataModify);
+        keyGraph.addNode(data);
+        keyGraph.addNode(rootCmd);
+        keyGraph.putEdge(allPerm, allCmd);
+        keyGraph.putEdge(allCmd, lvl2Cmd);
+        keyGraph.putEdge(allCmd, forceLoadUse);
+        keyGraph.putEdge(allCmd, forceLoadCheck);
+        keyGraph.putEdge(allCmd, forceLoad);
+        keyGraph.putEdge(allCmd, dataModifyBlock);
+        keyGraph.putEdge(allCmd, dataModify);
+        keyGraph.putEdge(allCmd, data);
+        keyGraph.putEdge(allCmd, time);
+        keyGraph.putEdge(allCmd, rootCmd);
+        keyGraph.putEdge(lvl2Cmd, forceLoadCheck);
+        keyGraph.putEdge(lvl2Cmd, forceLoad);
+        keyGraph.putEdge(lvl2Cmd, dataModifyBlock);
+        keyGraph.putEdge(lvl2Cmd, dataModify);
+        keyGraph.putEdge(lvl2Cmd, data);
+        keyGraph.putEdge(lvl2Cmd, lvl0Cmd);
+        keyGraph.putEdge(lvl0Cmd, time);
+        keyGraph.putEdge(forceLoadUse, forceLoad);
+        keyGraph.putEdge(forceLoadCheck, forceLoad);
+        keyGraph.putEdge(forceLoad, rootCmd);
+        keyGraph.putEdge(dataModifyBlock, dataModify);
+        keyGraph.putEdge(dataModify, data);
+        keyGraph.putEdge(data, rootCmd);
+        keyGraph.putEdge(time, rootCmd);
         //</editor-fold>
 
         BasicPermissionSystem<Object, Object> system = new BasicPermissionSystem<>(subjectGraph, keyGraph);
