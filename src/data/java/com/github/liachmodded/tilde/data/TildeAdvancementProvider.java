@@ -8,7 +8,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.github.liachmodded.doublecart.data;
+package com.github.liachmodded.tilde.data;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
@@ -24,18 +24,17 @@ import net.minecraft.advancement.Advancement;
 import net.minecraft.data.DataCache;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.server.EndTabAdvancementGenerator;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CartAdvancementProvider implements DataProvider {
+public class TildeAdvancementProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
     private final DataGenerator root;
-    private final List<Consumer<Consumer<Advancement>>> tabGenerators = ImmutableList.of(new CartAdvancementTab());
+    private final List<Consumer<Consumer<Advancement>>> tabGenerators = ImmutableList.of(new TildeAdvancementTab());
 
-    public CartAdvancementProvider(DataGenerator dataGenerator_1) {
+    public TildeAdvancementProvider(DataGenerator dataGenerator_1) {
         this.root = dataGenerator_1;
     }
 

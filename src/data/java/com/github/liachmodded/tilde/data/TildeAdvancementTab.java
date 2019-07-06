@@ -3,12 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-package com.github.liachmodded.doublecart.data;
+package com.github.liachmodded.tilde.data;
 
-import com.github.liachmodded.doublecart.DoubleCartEntry;
+import com.github.liachmodded.tilde.Tilde;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.criterion.ImpossibleCriterion;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -16,13 +17,14 @@ import net.minecraft.text.TranslatableText;
 
 import java.util.function.Consumer;
 
-public class CartAdvancementTab implements Consumer<Consumer<Advancement>> {
+public class TildeAdvancementTab implements Consumer<Consumer<Advancement>> {
 
     @Override
     public void accept(Consumer<Advancement> consumer) {
         Advancement advancement = Advancement.Task.create()
                 .display(makeDisplay(Items.MUSIC_DISC_STRAD , "dc.title", "dc.desc"))
-                .build(DoubleCartEntry.name("my_advancement"));
+                .criterion("impossible", new ImpossibleCriterion.Conditions())
+                .build(Tilde.name("my_advancement"));
         consumer.accept(advancement);
     }
 

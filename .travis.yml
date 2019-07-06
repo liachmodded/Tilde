@@ -46,11 +46,11 @@ jobs:
 stages:
 - build
 - name: deploy
-  if: repo = liachmodded/carttemplate AND env(bintray_key)
+  if: repo = liachmodded/Tilde AND env(bintray_key)
 - name: javadocs
-  if: repo = liachmodded/carttemplate AND env(GITHUB_OAUTH_TOKEN)
-- name: releases
-  if: repo = liachmodded/carttemplate AND env(GITHUB_OAUTH_TOKEN)
+  if: repo = liachmodded/Tilde AND env(GITHUB_OAUTH_TOKEN)
+- name: release
+  if: repo = liachmodded/Tilde AND env(GITHUB_OAUTH_TOKEN)
 env:
   global:
   - TERM=dumb

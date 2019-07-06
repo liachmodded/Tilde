@@ -25,6 +25,12 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarnMappings}"
     modCompile "net.fabricmc:fabric-loader:${project.loaderVersion}"
 
+    compileOnly 'org.checkerframework:checker-qual:2.9.0'
+
+    testImplementation 'com.google.guava:guava-testlib:28.0-jre'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
+
     // Fabric API. This is technically optional, but you probably want it anyway.
     // modCompile "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
 
@@ -44,6 +50,26 @@ sourceSets {
         compileClasspath += sourceSets.code.output
         runtimeClasspath += sourceSets.code.compileClasspath
         runtimeClasspath += sourceSets.code.output
+    }
+    mixinimpl {
+        compileClasspath += sourceSets.code.compileClasspath
+        compileClasspath += sourceSets.code.output
+        runtimeClasspath += sourceSets.code.compileClasspath
+        runtimeClasspath += sourceSets.code.output
+    }
+    main {
+        runtimeClasspath += sourceSets.code.runtimeClasspath
+        runtimeClasspath += sourceSets.code.output
+        runtimeClasspath += sourceSets.mixinimpl.runtimeClasspath
+        runtimeClasspath += sourceSets.mixinimpl.output
+    }
+    test {
+        compileClasspath += sourceSets.code.compileClasspath
+        compileClasspath += sourceSets.code.output
+        runtimeClasspath += sourceSets.code.runtimeClasspath
+        runtimeClasspath += sourceSets.code.output
+        runtimeClasspath += sourceSets.mixinimpl.runtimeClasspath
+        runtimeClasspath += sourceSets.mixinimpl.output
     }
 }
 

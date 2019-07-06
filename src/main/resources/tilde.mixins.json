@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "",
+  "package": "com.github.liachmodded.tilde.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

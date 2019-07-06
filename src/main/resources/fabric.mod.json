@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "doublecart",
+  "id": "tilde",
   "version": "${version}",
 
-  "name": "double cart",
+  "name": "Tilde",
   "description": "${description}",
   "authors": [
     "liach"
   ],
   "contact": {
-    "homepage": "https://github.com/liachmodded/doublecart",
-    "sources": "https://github.com/liachmodded/doublecart"
+    "homepage": "https://github.com/liachmodded/Tilde",
+    "sources": "https://github.com/liachmodded/Tilde"
   },
 
   "license": "MPL-2.0",
-  "icon": "assets/doublecart/icon.png",
+  "icon": "assets/tilde/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.liachmodded.doublecart.DoubleCartEntry"
+      "com.github.liachmodded.tilde.Tilde"
     ]
   },
   "mixins": [
-    "doublecart.mixins.json"
+    "tilde.mixins.json"
   ],
 
   "requires": {
