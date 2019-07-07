@@ -25,7 +25,7 @@ public abstract class ClientMixin extends NonBlockingThreadExecutor<Runnable> {
         super(string_1);
     }
 
-    @Inject(method = "init()V", at = @At("RETURN"))
+    @Inject(method = "init()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/SplashScreen;method_18819(Lnet/minecraft/client/MinecraftClient;)V"))
     public void onInitMethod(CallbackInfo ci) {
         resourceManager.registerListener(new MidiSequenceLoader(Tilde.getInstance().getMusicCallback()));
     }
