@@ -25,7 +25,9 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarnMappings}"
     modCompile "net.fabricmc:fabric-loader:${project.loaderVersion}"
 
-    compileOnly 'org.checkerframework:checker-qual:2.9.0'
+    compileOnly('org.checkerframework:checker-qual:2.9.0') {
+        exclude module: "guava"
+    }
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
@@ -39,7 +41,7 @@ dependencies {
 
 configurations.all {
     resolutionStrategy {
-//        force("com.google.guava:guava:21.0")
+        force("com.google.guava:guava:21.0")
     }
 }
 
@@ -158,13 +160,13 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.code.allSource
 }
 
-task javadocs(type: Javadoc) {
-    source = sourceSets.code.allJava
+javadoc {
+    source += sourceSets.code.allJava
 }
 
-task javadocsJar(type: Jar, dependsOn: javadocs) {
-    classifier = "javadocs"
-    from javadocs.destinationDir
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = "javadoc"
+    from javadoc.destinationDir
 }
 
 jar {
@@ -176,7 +178,7 @@ jar {
 artifacts {
     archives jar
     archives sourcesJar
-    archives javadocsJar
+    archives javadocJar
 }
 
 bintray {
@@ -215,20 +217,16 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             // add all the jars that should be included when publishing to maven
-            artifact(jar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-            artifact javadocsJar
+            artifact jar
+            artifact sourcesJar
+            artifact javadocJar
         }
     }
 
     // select the repositories you want to publish to
     repositories {
         // uncomment to publish to the local maven
-        // mavenLocal()
+         mavenLocal()
     }
 }
 

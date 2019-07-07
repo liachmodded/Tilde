@@ -18,6 +18,9 @@ public class Tilde implements ModInitializer {
      */
     public static final String ID = "tilde";
 
+    private static Tilde instance;
+    private MusicRunner musicRunner = new MusicRunner();
+
     /**
      * Convenience method to create a namespaced identifier for an object from Tilde mod.
      *
@@ -28,8 +31,25 @@ public class Tilde implements ModInitializer {
         return new Identifier(ID, name);
     }
 
+    @SuppressWarnings("unchecked")
+    public static <E extends Throwable> void rethrow(Throwable ex) throws E {
+        throw (E) ex;
+    }
+
+    public static Tilde getInstance() {
+        return instance;
+    }
+
+    public Tilde() {
+        instance = this;
+    }
+
+    public MusicCallback getMusicCallback() {
+        return musicRunner;
+    }
+
     @Override
     public void onInitialize() {
-
+        new Thread(musicRunner).start();
     }
 }
