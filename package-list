@@ -1,2 +1,7 @@
 com.github.liachmodded.tilde
-com.github.liachmodded.tilde.permission
+com.github.liachmodded.tilde.client
+com.github.liachmodded.tilde.client.midi
+com.github.liachmodded.tilde.config
+com.github.liachmodded.tilde.permission.model
+com.github.liachmodded.tilde.resource
+com.github.liachmodded.tilde.server
