@@ -57,7 +57,7 @@ public class MidiSequenceLoader implements EasyResourceLoader<List<Sequence>> {
           return CompletableFuture.allOf(tasks).thenApplyAsync((nil) -> {
             final List<Sequence> sequences = new ArrayList<>(tasks.length);
             for (CompletableFuture<Sequence> each : tasks) {
-              @Nullable Sequence sequence = null;
+              /* @Nullable */ Sequence sequence = null; // javac broke
               try {
                 sequence = each.join();
               } catch (CompletionException ignored) {

@@ -1,5 +1,11 @@
+buildscript {
+    dependencies {
+	    classpath fileTree(dir: "bsdep", include: "**.jar") // In case loom bork
+	}
+}
+
 plugins {
-    id 'fabric-loom' version '0.2.3-SNAPSHOT'
+    id 'fabric-loom' version '0.2.5-SNAPSHOT'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.4'
     id 'net.minecrell.licenser' version '0.4.1'
@@ -107,7 +113,8 @@ tasks.withType(Javadoc) {
     options.links(
             'https://google.github.io/guava/releases/21.0/api/docs/',
             'http://asm.ow2.org/asm50/javadoc/user/',
-            'https://docs.oracle.com/javase/8/docs/api/'
+            'https://docs.oracle.com/javase/8/docs/api/',
+            'https://docs.javacord.org/api/v/3.0.4/'
             // Need to add minecraft jd publication once there is one available
     )
 
