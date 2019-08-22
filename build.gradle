@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.4'
     id 'net.minecrell.licenser' version '0.4.1'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,6 +20,9 @@ group = project.mavenGroup
 minecraft {
 }
 
+repositories {
+}
+
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraftVersion}"
@@ -32,8 +36,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
 
+    implementation 'org.javacord:javacord:3.0.4'
+
     // Fabric API. This is technically optional, but you probably want it anyway.
-    // modCompile "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
+    modCompile "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
@@ -42,6 +48,7 @@ dependencies {
 configurations.all {
     resolutionStrategy {
         force("com.google.guava:guava:21.0")
+        force("org.apache.logging.log4j:log4j-api:2.8.1")
     }
 }
 
