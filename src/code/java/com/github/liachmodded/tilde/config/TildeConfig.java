@@ -35,6 +35,19 @@ public final class TildeConfig extends AbstractPropertiesHandler<TildeConfig> {
     this.file = file;
   }
 
+  public static Properties load(Path path) {
+    Properties properties = new Properties();
+
+    // The vanilla
+    try (Reader reader = Files.newBufferedReader(path)) {
+      properties.load(reader);
+    } catch (IOException ex) {
+      Tilde.LOGGER.error("Failed to load properties from file {}!", path, ex);
+    }
+
+    return properties;
+  }
+
   public TildeConfig copyTo(Path file) {
     Properties copiedProperties = new Properties();
     copiedProperties.putAll(getProperties());
@@ -54,6 +67,8 @@ public final class TildeConfig extends AbstractPropertiesHandler<TildeConfig> {
     save(file, null);
   }
 
+  // Exposures
+
   private void save(final Path file, @Nullable String comment) {
     try {
       Files.createDirectories(file.getParent());
@@ -64,8 +79,6 @@ public final class TildeConfig extends AbstractPropertiesHandler<TildeConfig> {
       Tilde.LOGGER.warn("Cannot save config at {}!", file, ex);
     }
   }
-
-  // Exposures
 
   @Override
   public <V> PropertyAccessor<V> accessor(final String key, final Function<String, V> reader, final Function<V, String> saver, final V value) {
@@ -87,11 +100,11 @@ public final class TildeConfig extends AbstractPropertiesHandler<TildeConfig> {
     return super.booleanAccessor(key, value);
   }
 
+  // Internal
+
   public PropertyAccessor<String> stringAccessor(final String key, final String value) {
     return accessor(key, Function.identity(), Function.identity(), value);
   }
-
-  // Internal
 
   @Override
   protected Properties getProperties() {
@@ -101,19 +114,6 @@ public final class TildeConfig extends AbstractPropertiesHandler<TildeConfig> {
   @Override // this is actually modifying the config from the new properties
   protected TildeConfig create(final Properties properties) {
     return this;
-  }
-
-  public static Properties load(Path path) {
-    Properties properties = new Properties();
-
-    // The vanilla
-    try (Reader reader = Files.newBufferedReader(path)) {
-      properties.load(reader);
-    } catch (IOException ex) {
-      Tilde.LOGGER.error("Failed to load properties from file {}!", path, ex);
-    }
-
-    return properties;
   }
 
 }

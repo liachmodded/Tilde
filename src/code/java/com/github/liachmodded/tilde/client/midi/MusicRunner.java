@@ -15,21 +15,19 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
-public class MusicRunner implements Runnable, MusicCallback {
+public final class MusicRunner implements Runnable {
 
   private final Random random = new Random(); // only used on off thread!
+  private final AtomicReference<List<Sequence>> sequenceRef = new AtomicReference<>(Collections.emptyList());
   private volatile boolean alive = true;
   private volatile boolean playing = true;
   private volatile boolean updatedMusic = false;
-  private final AtomicReference<List<Sequence>> sequenceRef = new AtomicReference<>(Collections.emptyList());
 
-  @Override
-  public void updateMusic(List<Sequence> sequences) {
+  void updateMusic(List<Sequence> sequences) {
     sequenceRef.set(sequences);
     updatedMusic = true;
   }
 
-  @Override
   public void setPlaying(boolean playing) {
     this.playing = playing;
   }

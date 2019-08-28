@@ -34,13 +34,6 @@ public enum PermissionValue {
   }
 
   /**
-   * Gets the boolean value of this permission value.
-   */
-  public boolean evaluate() {
-    return value;
-  }
-
-  /**
    * Gets the merged results of two permission values.
    */
   public static PermissionValue merge(PermissionValue one, PermissionValue two) {
@@ -59,5 +52,12 @@ public enum PermissionValue {
    */
   public static PermissionValue merge(Stream<PermissionValue> definitions) {
     return definitions.max(Comparator.naturalOrder()).orElse(NONE);
+  }
+
+  /**
+   * Gets the boolean value of this permission value.
+   */
+  public boolean evaluate() {
+    return value;
   }
 }

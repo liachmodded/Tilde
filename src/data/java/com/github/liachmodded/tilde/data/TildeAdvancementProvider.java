@@ -29,46 +29,47 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TildeAdvancementProvider implements DataProvider {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-    private final DataGenerator root;
-    private final List<Consumer<Consumer<Advancement>>> tabGenerators = ImmutableList.of(new TildeAdvancementTab());
 
-    public TildeAdvancementProvider(DataGenerator dataGenerator_1) {
-        this.root = dataGenerator_1;
-    }
+  private static final Logger LOGGER = LogManager.getLogger();
+  private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
+  private final DataGenerator root;
+  private final List<Consumer<Consumer<Advancement>>> tabGenerators = ImmutableList.of(new TildeAdvancementTab());
 
-    public void run(DataCache dataCache_1) throws IOException {
-        Path path_1 = this.root.getOutput();
-        Set<Identifier> set_1 = Sets.newHashSet();
-        Consumer<Advancement> consumer_1 = (advancement_1) -> {
-            if (!set_1.add(advancement_1.getId())) {
-                throw new IllegalStateException("Duplicate advancement " + advancement_1.getId());
-            } else {
-                Path path_2 = getOutput(path_1, advancement_1);
+  public TildeAdvancementProvider(DataGenerator dataGenerator_1) {
+    this.root = dataGenerator_1;
+  }
 
-                try {
-                    DataProvider.writeToPath(GSON, dataCache_1, advancement_1.createTask().toJson(), path_2);
-                } catch (IOException var6) {
-                    LOGGER.error("Couldn't save advancement {}", path_2, var6);
-                }
+  private static Path getOutput(Path path_1, Advancement advancement_1) {
+    return path_1.resolve("data/" + advancement_1.getId().getNamespace() + "/advancements/" + advancement_1.getId().getPath() + ".json");
+  }
 
-            }
-        };
-        Iterator var5 = this.tabGenerators.iterator();
+  public void run(DataCache dataCache_1) throws IOException {
+    Path path_1 = this.root.getOutput();
+    Set<Identifier> set_1 = Sets.newHashSet();
+    Consumer<Advancement> consumer_1 = (advancement_1) -> {
+      if (!set_1.add(advancement_1.getId())) {
+        throw new IllegalStateException("Duplicate advancement " + advancement_1.getId());
+      } else {
+        Path path_2 = getOutput(path_1, advancement_1);
 
-        while(var5.hasNext()) {
-            Consumer<Consumer<Advancement>> consumer_2 = (Consumer)var5.next();
-            consumer_2.accept(consumer_1);
+        try {
+          DataProvider.writeToPath(GSON, dataCache_1, advancement_1.createTask().toJson(), path_2);
+        } catch (IOException var6) {
+          LOGGER.error("Couldn't save advancement {}", path_2, var6);
         }
 
+      }
+    };
+    Iterator var5 = this.tabGenerators.iterator();
+
+    while (var5.hasNext()) {
+      Consumer<Consumer<Advancement>> consumer_2 = (Consumer) var5.next();
+      consumer_2.accept(consumer_1);
     }
 
-    private static Path getOutput(Path path_1, Advancement advancement_1) {
-        return path_1.resolve("data/" + advancement_1.getId().getNamespace() + "/advancements/" + advancement_1.getId().getPath() + ".json");
-    }
+  }
 
-    public String getName() {
-        return "Advancements";
-    }
+  public String getName() {
+    return "Advancements";
+  }
 }

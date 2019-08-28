@@ -13,8 +13,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
@@ -55,7 +53,7 @@ public final class Tilde implements ModInitializer {
   public void onInitialize() {
     CommandRegistry.INSTANCE.register(false, this::registerCommands);
 
-//    ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener();
+    //    ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener();
 
     ServerStartCallback.EVENT.register(this::onServerStart);
     ServerStopCallback.EVENT.register(this::onServerStop);

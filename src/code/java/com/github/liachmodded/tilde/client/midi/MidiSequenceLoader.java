@@ -28,20 +28,15 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public class MidiSequenceLoader implements EasyResourceLoader<List<Sequence>> {
 
   private static final Identifier ID = Tilde.name("midi");
-  private final List<Sequence> sequences;
-  private final MusicCallback callback;
-
-  public MidiSequenceLoader(MusicCallback callback) {
-    this.sequences = new ArrayList<>();
-    this.callback = callback;
-  }
+  private @Nullable MusicRunner runner = null;
 
   @Override
   public CompletableFuture<List<Sequence>> prepare(ResourceManager manager, Profiler profiler, Executor executor) {
     return CompletableFuture.supplyAsync(() -> manager.findResources("midi", st -> st.endsWith(".mid") || st.endsWith(".midi")), executor)
         .thenComposeAsync((ids) -> {
-          @SuppressWarnings("unchecked") final CompletableFuture<Sequence>[] tasks = (CompletableFuture<Sequence>[]) new CompletableFuture<?>[ids
-              .size()];
+          @SuppressWarnings("unchecked") final CompletableFuture<Sequence>[] tasks =
+              (CompletableFuture<Sequence>[]) new CompletableFuture<?>[ids
+                  .size()];
           int i = 0;
           for (Identifier id : ids) {
             tasks[i] = CompletableFuture.supplyAsync(() -> {
@@ -57,7 +52,8 @@ public class MidiSequenceLoader implements EasyResourceLoader<List<Sequence>> {
           return CompletableFuture.allOf(tasks).thenApplyAsync((nil) -> {
             final List<Sequence> sequences = new ArrayList<>(tasks.length);
             for (CompletableFuture<Sequence> each : tasks) {
-              /* @Nullable */ Sequence sequence = null; // javac broke
+              /* @Nullable */
+              Sequence sequence = null; // javac broke
               try {
                 sequence = each.join();
               } catch (CompletionException ignored) {
@@ -74,10 +70,19 @@ public class MidiSequenceLoader implements EasyResourceLoader<List<Sequence>> {
 
   @Override
   public void apply(List<Sequence> data, ResourceManager manager, Profiler profiler) {
-    this.sequences.clear();
-    this.sequences.addAll(data);
-    ((ArrayList<?>) this.sequences).trimToSize();
-    this.callback.updateMusic(data);
+    if (data.isEmpty()) {
+      if (this.runner != null) {
+        this.runner.kill();
+        // Thread will get recycled
+        this.runner = null;
+      }
+    } else {
+      if (runner == null) {
+        this.runner = new MusicRunner();
+        new Thread(this.runner).start();
+      }
+      this.runner.updateMusic(data);
+    }
   }
 
   @Override

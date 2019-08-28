@@ -6,6 +6,7 @@
 package com.github.liachmodded.tilde.data;
 
 import com.github.liachmodded.tilde.Tilde;
+import java.util.function.Consumer;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementDisplay;
 import net.minecraft.advancement.AdvancementFrame;
@@ -15,20 +16,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.TranslatableText;
 
-import java.util.function.Consumer;
-
 public class TildeAdvancementTab implements Consumer<Consumer<Advancement>> {
 
-    @Override
-    public void accept(Consumer<Advancement> consumer) {
-        Advancement advancement = Advancement.Task.create()
-                .display(makeDisplay(Items.MUSIC_DISC_STRAD , "dc.title", "dc.desc"))
-                .criterion("impossible", new ImpossibleCriterion.Conditions())
-                .build(Tilde.name("my_advancement"));
-        consumer.accept(advancement);
-    }
+  public static AdvancementDisplay makeDisplay(ItemConvertible item, String titleKey, String descKey) {
+    return new AdvancementDisplay(new ItemStack(item.asItem()), new TranslatableText(titleKey), new TranslatableText(descKey), null,
+        AdvancementFrame.TASK, true, true, false);
+  }
 
-    public static AdvancementDisplay makeDisplay(ItemConvertible item, String titleKey, String descKey) {
-        return new AdvancementDisplay(new ItemStack(item.asItem()), new TranslatableText(titleKey), new TranslatableText(descKey), null, AdvancementFrame.TASK, true, true, false);
-    }
+  @Override
+  public void accept(Consumer<Advancement> consumer) {
+    Advancement advancement = Advancement.Task.create()
+        .display(makeDisplay(Items.MUSIC_DISC_STRAD, "dc.title", "dc.desc"))
+        .criterion("impossible", new ImpossibleCriterion.Conditions())
+        .build(Tilde.name("my_advancement"));
+    consumer.accept(advancement);
+  }
 }

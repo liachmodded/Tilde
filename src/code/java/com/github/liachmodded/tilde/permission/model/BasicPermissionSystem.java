@@ -73,14 +73,6 @@ public class BasicPermissionSystem<S, K> extends AbstractPermissionSystem<S, K> 
     return map.getOrDefault(index, PermissionValue.NONE);
   }
 
-  class PermDef {
-
-    int subjectParentVersion;
-    int keyParentVersion;
-
-    CachedPermissionValue value;
-  }
-
   enum CachedPermissionValue {
     ALLOW(PermissionValue.ALLOW, true),
     DENY(PermissionValue.DENY, true),
@@ -95,6 +87,14 @@ public class BasicPermissionSystem<S, K> extends AbstractPermissionSystem<S, K> 
       this.value = value;
       this.explicit = explicit;
     }
+  }
+
+  class PermDef {
+
+    int subjectParentVersion;
+    int keyParentVersion;
+
+    CachedPermissionValue value;
   }
 
 }

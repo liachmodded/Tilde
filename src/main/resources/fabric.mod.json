@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "tilde",
   "version": "${version}",
-
   "name": "Tilde",
   "description": "${description}",
   "authors": [
@@ -12,10 +11,8 @@
     "homepage": "https://github.com/liachmodded/Tilde",
     "sources": "https://github.com/liachmodded/Tilde"
   },
-
   "license": "MPL-2.0",
   "icon": "assets/tilde/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -28,7 +25,6 @@
   "mixins": [
     "tilde.mixins.json"
   ],
-
   "requires": {
     "fabricloader": ">=0.4.0"
   }

@@ -46,14 +46,14 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     return false;
   }
 
-//    @Override
-//    public boolean putEdge(EndpointPair<N> endpoints) {
-//        if (delegate.putEdge(endpoints)) {
-//            mutated = true;
-//            return true;
-//        }
-//        return false;
-//    }
+  //    @Override
+  //    public boolean putEdge(EndpointPair<N> endpoints) {
+  //        if (delegate.putEdge(endpoints)) {
+  //            mutated = true;
+  //            return true;
+  //        }
+  //        return false;
+  //    }
 
   @Override
   public boolean removeNode(Object node) {
@@ -73,14 +73,14 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     return false;
   }
 
-//    @Override
-//    public boolean removeEdge(EndpointPair<N> endpoints) {
-//        if (delegate.removeEdge(endpoints)) {
-//            mutated = true;
-//            return true;
-//        }
-//        return false;
-//    }
+  //    @Override
+  //    public boolean removeEdge(EndpointPair<N> endpoints) {
+  //        if (delegate.removeEdge(endpoints)) {
+  //            mutated = true;
+  //            return true;
+  //        }
+  //        return false;
+  //    }
   //</editor-fold>
 
   //<editor-fold desc="Regular graph delegates">
@@ -124,10 +124,10 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     return delegate.successors(node);
   }
 
-//    @Override
-//    public Set<EndpointPair<N>> incidentEdges(N node) {
-//        return delegate.incidentEdges(node);
-//    }
+  //    @Override
+  //    public Set<EndpointPair<N>> incidentEdges(N node) {
+  //        return delegate.incidentEdges(node);
+  //    }
 
   @Override
   public int degree(Object node) {
@@ -144,14 +144,14 @@ public class ChangeAwareGraph<N> implements MutableGraph<N> {
     return delegate.outDegree(node);
   }
 
-//    @Override
-//    public boolean hasEdgeConnecting(N nodeU, N nodeV) {
-//        return delegate.hasEdgeConnecting(nodeU, nodeV);
-//    }
-//
-//    @Override
-//    public boolean hasEdgeConnecting(EndpointPair<N> endpoints) {
-//        return delegate.hasEdgeConnecting(endpoints);
-//    }
+  //    @Override
+  //    public boolean hasEdgeConnecting(N nodeU, N nodeV) {
+  //        return delegate.hasEdgeConnecting(nodeU, nodeV);
+  //    }
+  //
+  //    @Override
+  //    public boolean hasEdgeConnecting(EndpointPair<N> endpoints) {
+  //        return delegate.hasEdgeConnecting(endpoints);
+  //    }
   //</editor-fold>
 }

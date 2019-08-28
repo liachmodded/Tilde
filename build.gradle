@@ -42,8 +42,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
 
-    implementation 'org.javacord:javacord:3.0.4'
-
     // Fabric API. This is technically optional, but you probably want it anyway.
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
 
@@ -113,8 +111,7 @@ tasks.withType(Javadoc) {
     options.links(
             'https://google.github.io/guava/releases/21.0/api/docs/',
             'http://asm.ow2.org/asm50/javadoc/user/',
-            'https://docs.oracle.com/javase/8/docs/api/',
-            'https://docs.javacord.org/api/v/3.0.4/'
+            'https://docs.oracle.com/javase/8/docs/api/'
             // Need to add minecraft jd publication once there is one available
     )
 

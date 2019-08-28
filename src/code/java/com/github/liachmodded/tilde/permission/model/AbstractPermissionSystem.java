@@ -35,9 +35,9 @@ public abstract class AbstractPermissionSystem<S, K> implements PermissionSystem
   public PermissionValue get(S subject, K key) {
     final PermissionIndex<S, K> index = new PermissionIndex<>(subject, key);
     final PermissionValue single = getExact(index);
-      if (single != PermissionValue.NONE) {
-          return single;
-      }
+    if (single != PermissionValue.NONE) {
+      return single;
+    }
 
     // Explore x/y axes
     return getAncestor(index);
@@ -60,12 +60,12 @@ public abstract class AbstractPermissionSystem<S, K> implements PermissionSystem
       for (S parentSubject : getSubjectRelations().predecessors(currentSubject)) {
         final PermissionIndex<S, K> next = new PermissionIndex<>(parentSubject, currentKey);
         final PermissionValue val = getExact(next);
-          if (val == PermissionValue.DENY) {
-              return PermissionValue.DENY;
-          }
-          if (val == PermissionValue.ALLOW) {
-              gotYes = true;
-          }
+        if (val == PermissionValue.DENY) {
+          return PermissionValue.DENY;
+        }
+        if (val == PermissionValue.ALLOW) {
+          gotYes = true;
+        }
 
         if (val == PermissionValue.NONE && explored.add(next)) {
           queue.add(next);
@@ -75,12 +75,12 @@ public abstract class AbstractPermissionSystem<S, K> implements PermissionSystem
       for (K parentKey : getKeyRelations().predecessors(currentKey)) {
         final PermissionIndex<S, K> next = new PermissionIndex<>(currentSubject, parentKey);
         final PermissionValue val = getExact(next);
-          if (val == PermissionValue.DENY) {
-              return PermissionValue.DENY;
-          }
-          if (val == PermissionValue.ALLOW) {
-              gotYes = true;
-          }
+        if (val == PermissionValue.DENY) {
+          return PermissionValue.DENY;
+        }
+        if (val == PermissionValue.ALLOW) {
+          gotYes = true;
+        }
 
         if (val == PermissionValue.NONE && explored.add(next)) {
           queue.add(next);
