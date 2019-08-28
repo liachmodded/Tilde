@@ -5,15 +5,16 @@
  */
 package com.github.liachmodded.tilde.client;
 
+import com.github.liachmodded.tilde.config.Property;
 import com.github.liachmodded.tilde.config.TildeConfig;
 
 public final class TildeClientSettings {
 
   private static final String COMMENT = "Tilde's client settings; restart client to apply changes!";
-  public final TildeConfig.PropertyAccessor<Boolean> midiLoader;
+  public final Property<Boolean> midiLoader;
 
   TildeClientSettings(TildeConfig config) {
-    midiLoader = config.booleanAccessor("midi-loader", true);
+    midiLoader = config.booleanProperty("midi-loader", true);
 
     config.save(COMMENT);
   }

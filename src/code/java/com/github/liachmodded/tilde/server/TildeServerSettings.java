@@ -5,19 +5,20 @@
  */
 package com.github.liachmodded.tilde.server;
 
+import com.github.liachmodded.tilde.config.Property;
 import com.github.liachmodded.tilde.config.TildeConfig;
 
 public final class TildeServerSettings {
 
   private static final String COMMENT = "Tilde's server settings; restart world/server to apply changes!";
-  public final TildeConfig.PropertyAccessor<String> discordToken;
+  public final Property<String> discordToken;
 
   private final TildeConfig config;
 
   TildeServerSettings(TildeConfig config) {
     this.config = config;
 
-    discordToken = config.stringAccessor("discord-token", "");
+    discordToken = config.stringProperty("discord-token", "");
 
     save();
   }
